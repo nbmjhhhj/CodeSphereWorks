@@ -1,20 +1,10 @@
-function isAlienSorted(words, order) {
-  const dict = new Map();
-  for (let i = 0; i < order.length; i++) {
-    dict.set(order[i], i);
+function wiggleSort(nums) {
+  nums.sort((a, b) => a - b);
+  const median = Math.floor((nums.length + 1) / 2);
+  const left = nums.slice(0, median);
+  const right = nums.slice(median);
+  for (let i = 0; i < nums.length; i++) {
+    if (i % 2 === 0) nums[i] = left.pop();
+    else nums[i] = right.pop();
   }
-  for (let i = 0; i < words.length - 1; i++) {
-    const word1 = words[i];
-    const word2 = words[i + 1];
-    let found = false;
-    for (let j = 0; j < Math.min(word1.length, word2.length); j++) {
-      if (word1[j] !== word2[j]) {
-        if (dict.get(word1[j]) > dict.get(word2[j])) return false;
-        found = true;
-        break;
-      }
-    }
-    if (!found && word1.length > word2.length) return false;
-  }
-  return true;
 }
